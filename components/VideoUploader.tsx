@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Upload, VideoIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useUploadThing } from "@/lib/utils/uploadthing/uploadthing";
+import { useUploadThing } from "@/utils/uploadthing/uploadthing";
 
 interface VideoUploaderProps {
   currentVideo?: string;
@@ -25,7 +25,7 @@ export default function CustomVideoUploader({
     useUploadThing("videoUploader");
 
   const handleFileSelect = async (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const files = event.target.files;
     if (!files || files.length === 0) return;
@@ -37,8 +37,8 @@ export default function CustomVideoUploader({
       const uploaded = await startUpload(filesArray);
       if (uploaded && uploaded[0]?.ufsUrl) {
         const uploadedUrl = uploaded[0].ufsUrl;
-        setPreview(uploadedUrl); // show permanent URL in preview
-        onUploadComplete(uploadedUrl); // callback to parent
+        setPreview(uploadedUrl);
+        onUploadComplete(uploadedUrl);
       }
     } catch (error) {
       console.error("Video upload failed:", error);
